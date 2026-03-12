@@ -1,0 +1,15 @@
+{
+  "name": "freshrss-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "freshrss": "./src/main.ts"
+  },
+  "dependencies": {
+    "turndown": "^7"
+  },
+  "devDependencies": {
+    "bun-types": "^1",
+    "@types/turndown": "^5"
+  }
+}
