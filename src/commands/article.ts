@@ -14,6 +14,7 @@ export async function articleList(flags: {
   feed?: string;
   folder?: string;
   count: number;
+  all?: boolean;
 }): Promise<void> {
   const config = loadConfig();
   const auth = await login(config);
@@ -21,7 +22,7 @@ export async function articleList(flags: {
   const streamId = flags.folder
     ? `user/-/label/${flags.folder}`
     : flags.feed ?? "user/-/state/com.google/reading-list";
-  const excludeTag = "user/-/state/com.google/read";
+  const excludeTag = flags.all ? undefined : "user/-/state/com.google/read";
 
   const data = await getStreamContents(
     config,

@@ -63,6 +63,7 @@ Article commands:
   article list                       List unread articles
   article list --feed <feed-id>      Filter by feed
   article list --folder <name>       Filter by folder (category)
+  article list --all                  Include read articles
   article list --count <n>           Limit results (default 20)
   article show <id>                  Show article content (markdown)
   article read <id>                  Mark as read
@@ -116,6 +117,7 @@ async function main(): Promise<void> {
         case "list": {
           const feed = parsed.flags["--feed"];
           const folder = parsed.flags["--folder"];
+          const all = parsed.flags["--all"] === true;
           const countRaw = parsed.flags["--count"];
           const count = typeof countRaw === "string" ? parseInt(countRaw, 10) : 20;
           await articleList({
@@ -123,6 +125,7 @@ async function main(): Promise<void> {
             feed: typeof feed === "string" ? feed : undefined,
             folder: typeof folder === "string" ? folder : undefined,
             count,
+            all,
           });
           break;
         }
