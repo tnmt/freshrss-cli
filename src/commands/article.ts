@@ -12,12 +12,15 @@ import { CliError } from "../error.js";
 export async function articleList(flags: {
   json: boolean;
   feed?: string;
+  folder?: string;
   count: number;
 }): Promise<void> {
   const config = loadConfig();
   const auth = await login(config);
 
-  const streamId = flags.feed ?? "user/-/state/com.google/reading-list";
+  const streamId = flags.folder
+    ? `user/-/label/${flags.folder}`
+    : flags.feed ?? "user/-/state/com.google/reading-list";
   const excludeTag = "user/-/state/com.google/read";
 
   const data = await getStreamContents(
