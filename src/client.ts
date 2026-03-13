@@ -202,6 +202,34 @@ export async function setItemTag(
   if (!res.ok) throw new Error(`setItemTag failed: ${res.status}`);
 }
 
+export async function subscriptionEdit(
+  config: Config,
+  auth: string,
+  action: "subscribe" | "unsubscribe",
+  feedUrl: string,
+  title?: string,
+  folder?: string,
+): Promise<void> {
+  const params = new URLSearchParams({
+    ac: action,
+    s: feedUrl.startsWith("feed/") ? feedUrl : `feed/${feedUrl}`,
+  });
+  if (title) params.set("t", title);
+  if (folder) params.set("a", `user/-/label/${folder}`);
+
+  const res = await authedFetch(
+    config,
+    auth,
+    "/api/greader.php/reader/api/0/subscription/edit",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+    },
+  );
+  if (!res.ok) throw new Error(`subscriptionEdit (${action}) failed: ${res.status}`);
+}
+
 export async function removeItemTag(
   config: Config,
   auth: string,

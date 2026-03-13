@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { feedList, feedShow } from "./commands/feed.js";
+import { feedList, feedShow, feedAdd, feedDelete } from "./commands/feed.js";
 import { articleList, articleShow, articleRead, articleUnread, articleStar, articleUnstar } from "./commands/article.js";
 import { schema } from "./commands/schema.js";
 import { handleError, CliError } from "./error.js";
@@ -58,6 +58,10 @@ Resources:
 Feed commands:
   feed list                          List subscribed feeds
   feed show <id>                     Show feed details
+  feed add <url>                     Subscribe to a feed
+    --title <title>                  Set feed title
+    --folder <folder>                Add to folder
+  feed delete <id>                   Unsubscribe from a feed
 
 Article commands:
   article list                       List unread articles
@@ -103,11 +107,23 @@ async function main(): Promise<void> {
         case "show":
           await feedShow(parsed.positional[0], { json: jsonOutput });
           break;
+        case "add": {
+          const title = parsed.flags["--title"];
+          const folder = parsed.flags["--folder"];
+          await feedAdd(parsed.positional[0], {
+            title: typeof title === "string" ? title : undefined,
+            folder: typeof folder === "string" ? folder : undefined,
+          });
+          break;
+        }
+        case "delete":
+          await feedDelete(parsed.positional[0]);
+          break;
         default:
           throw new CliError(
             "UNKNOWN_ACTION",
             `Unknown feed action: ${parsed.action || "(none)"}`,
-            "Available actions: list, show",
+            "Available actions: list, show, add, delete",
           );
       }
       break;
