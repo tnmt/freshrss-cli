@@ -62,3 +62,28 @@ freshrss article unstar <id>                 # Unstar article
 ```sh
 bun link
 ```
+
+## Prebuilt binaries
+
+`v*` タグを push すると GitHub Actions が各プラットフォーム向けの単体バイナリをビルドし、Release に添付する。bun や git は不要。
+
+```sh
+# 例: Linux x64
+curl -fsSL -o freshrss https://github.com/tnmt/freshrss-cli/releases/latest/download/freshrss-linux-x64
+chmod +x freshrss
+```
+
+対応: `linux-x64` / `linux-arm64` / `darwin-x64` / `darwin-arm64`。設定は環境変数または `~/.config/freshrss-cli/config.json` から読む。
+
+ローカルでのビルド:
+
+```sh
+bun run build       # dist/freshrss
+bun run build:all   # 全プラットフォーム
+```
+
+リリース手順:
+
+```sh
+git tag v0.1.0 && git push origin v0.1.0
+```
