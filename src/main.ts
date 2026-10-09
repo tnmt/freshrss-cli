@@ -5,7 +5,7 @@ import { articleList, articleShow, articleRead, articleUnread, articleStar, arti
 import { schema } from "./commands/schema.js";
 import { handleError, CliError } from "./error.js";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 
 interface ParsedArgs {
   resource: string;
