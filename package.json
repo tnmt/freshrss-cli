@@ -9,10 +9,12 @@
     "turndown": "^7"
   },
   "devDependencies": {
+    "@types/turndown": "^5",
     "bun-types": "^1",
-    "@types/turndown": "^5"
+    "typescript": "^7.0.2"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "build": "bun build --compile src/main.ts --outfile dist/freshrss",
     "build:all": "bun build --compile --target=bun-linux-x64 src/main.ts --outfile dist/freshrss-linux-x64 && bun build --compile --target=bun-linux-arm64 src/main.ts --outfile dist/freshrss-linux-arm64 && bun build --compile --target=bun-darwin-x64 src/main.ts --outfile dist/freshrss-darwin-x64 && bun build --compile --target=bun-darwin-arm64 src/main.ts --outfile dist/freshrss-darwin-arm64"
   }
