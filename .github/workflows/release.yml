@@ -23,7 +23,7 @@ jobs:
             echo "tag $GITHUB_REF_NAME does not match package.json version v$version" >&2
             exit 1
           fi
-      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31.11.3
       - run: nix develop --command bun install --frozen-lockfile
       - run: nix develop --command bun run typecheck
       - run: nix develop --command bun run build:all
